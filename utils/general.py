@@ -796,8 +796,8 @@ def non_max_suppression(prediction,
             i, j = (x[:, 5:] > conf_thres).nonzero(as_tuple=False).T
             x = torch.cat((box[i], x[i, j + 5, None], j[:, None].float()), 1)
         else:  # best class only
-            conf_col, col = x[1:5, 5:].max(1, keepdim=True)
-            conf_val, val = x[5:19, 5:].max(1, keepdim=True)
+            conf_col, col = x[:, 5+1:5+5].max(1, keepdim=True)
+            conf_val, val = x[:, 5+5:5+19].max(1, keepdim=True)
             conf = (conf_col+conf_val)/2
             j = val*4+col+1
             x = torch.cat((box, conf, j.float()), 1)[conf.view(-1) > conf_thres]
