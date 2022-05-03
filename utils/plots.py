@@ -238,7 +238,9 @@ def plot_images(images, targets, paths=None, fname='images.jpg', names=None, max
             for j, box in enumerate(boxes.T.tolist()):
                 cls = classes[j]
                 color = colors(cls)
-                cls = names[cls] if names else cls
+                col = 1+(cls-1)%4
+                val = 5+torch.div(cls-1, 4).long()
+                cls = names[col]+'-'+names[val] if names else cls
                 if labels or conf[j] > 0.25:  # 0.25 conf thresh
                     label = f'{cls}' if labels else f'{cls} {conf[j]:.1f}'
                     annotator.box_label(box, label, color=color)
