@@ -153,8 +153,8 @@ class ComputeLoss:
                 # Classification
                 if self.nc > 1:  # cls loss (only if multiple classes)
                     t = torch.full_like(pcls, self.cn, device=self.device)  # targets
-                    t[range(n),     tcls[i] %  10] = self.cp
-                    t[range(n), 5 + tcls[i] // 10] = self.cp
+                    t[range(n), 1 + (tcls[i] - 1) %  4] = self.cp
+                    t[range(n), 5 + (tcls[i] - 1) // 4] = self.cp
                     lcls += self.BCEcls(pcls, t)  # BCE
 
                 # Append targets to text file
